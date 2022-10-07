@@ -6,7 +6,6 @@ import reportController from "./src/Controllers/reportController.js";
 import reportRouter from "./src/Routes/reportRoute.js";
 
 const app = express();
-
 dotenv.config();
 
 //Settings
