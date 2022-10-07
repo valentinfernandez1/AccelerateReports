@@ -1,0 +1,21 @@
+{
+  "name": "backend-reportes",
+  "version": "1.0.0",
+  "description": "Microservicio de Reportes Accelerate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Accelerate",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cors": "*",
+    "dotenv": "*",
+    "express": "*",
+    "morgan": "*",
+    "mongodb": "*",
+    "mongoose": "*"
+  }
+}
