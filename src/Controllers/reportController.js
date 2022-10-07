@@ -1,3 +1,8 @@
+import {
+  calculateAmountUsers,
+  calculateMeanG_Project,
+  calculateMeanG_Users,
+} from "../helpers/calculations.js";
 import Report from "../Models/Report.js";
 
 export default {
@@ -37,7 +42,7 @@ export default {
   },
 
   getAllEnvirionments: async (req, res, next) => {
-    let { from, to } = req.query;
+    let { from = 0, to = new Date() } = req.query;
 
     let baseObject = [
       { name: "GoogleCloud", amount: 0 },
@@ -109,13 +114,10 @@ export default {
     res.status(200).json(baseMicroservices);
   },
   getAllEntities: async (req, res, next) => {
-    let { from, to } = req.query;
-
-    from = new Date(from * 1);
-    to = new Date(to * 1);
+    let { from = 0, to = new Date() } = req.query;
 
     let entityData = [
-      { name: "Average of Atrributes", value: 0 },
+      { name: "Average of Atributes", value: 0 },
       { name: "Average of Relations", value: 0 },
     ];
 
@@ -182,7 +184,7 @@ export default {
     res.status(200).json(timeColum);
   },
   getCapabilities: async (req, res, next) => {
-    let { from, to } = req.query;
+    let { from = 0, to = new Date() } = req.query;
 
     let capabilities = [];
 
@@ -220,5 +222,34 @@ export default {
       });
     });
     res.status(200).json(capabilities);
+  },
+  getGenerationMetrics: async (req, res, next) => {
+    let { from = 0, to = new Date() } = req.query;
+
+    let generationMetrics = [
+      { Name: "Amount of users", Value: 0 },
+      { Name: "Generations per User", Value: 0 },
+      { Name: "Generations per Project", Value: 0 },
+    ];
+
+    let reports;
+    try {
+      reports = await Report.find({
+        generationDate: {
+          $gte: from,
+          $lt: to,
+        },
+      }).lean();
+    } catch (err) {
+      res.status(500);
+    }
+
+    if (!reports) return res.status(200).json(entityData);
+
+    generationMetrics[0].Value = calculateAmountUsers(reports);
+    generationMetrics[1].Value = calculateMeanG_Users(reports);
+    generationMetrics[2].Value = calculateMeanG_Project(reports);
+
+    res.status(200).json(generationMetrics);
   },
 };
