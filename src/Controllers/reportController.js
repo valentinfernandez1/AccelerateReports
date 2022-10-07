@@ -2,10 +2,18 @@ import Report from "../Models/Report.js";
 
 export default {
   createReport: async (req, res, next) => {
-    const { environments, backendMicroservices, entities } = req.body;
+    const {
+      environments,
+      macAddress,
+      projectName,
+      backendMicroservices,
+      entities,
+    } = req.body;
 
     const report = {
       generationDate: new Date(),
+      macAddress,
+      projectName,
       environments,
       backendMicroservices,
       entities,
