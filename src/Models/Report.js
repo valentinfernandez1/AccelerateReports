@@ -6,6 +6,8 @@ const ReportSchema = new mongoose.Schema({
     required: false,
     default: new Date(),
   },
+  macAddress: String,
+  projectName: String,
   environments: [String],
   backendMicroservices: [
     {

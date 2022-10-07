@@ -29,6 +29,8 @@ export default {
   },
 
   getAllEnvirionments: async (req, res, next) => {
+    let { from, to } = req.query;
+
     let baseObject = [
       { name: "GoogleCloud", amount: 0 },
       { name: "AWS", amount: 0 },
@@ -36,10 +38,17 @@ export default {
     ];
     let reports;
     try {
-      reports = await Report.find().lean();
+      reports = await Report.find({
+        generationDate: {
+          $gte: from,
+          $lt: to,
+        },
+      }).lean();
     } catch (err) {
       res.status(500);
     }
+
+    if (!reports) return res.status(200).json(entityData);
 
     reports.forEach((report) => {
       report.environments.forEach((environment) => {
@@ -55,7 +64,10 @@ export default {
 
     res.status(200).json(baseObject);
   },
+
   getAllMicroservices: async (req, res, next) => {
+    let { from, to } = req.query;
+
     const baseMicroservices = [
       { name: "NodeJs - Express", amount: 0 },
       { name: "Python - Django", amount: 0 },
@@ -63,12 +75,18 @@ export default {
 
     let reports;
     try {
-      reports = await Report.find().lean();
+      reports = await Report.find({
+        generationDate: {
+          $gte: from,
+          $lt: to,
+        },
+      }).lean();
     } catch (err) {
       res.status(500);
     }
 
-    let microservices = [];
+    if (!reports) return res.status(200).json(entityData);
+
     reports.forEach((report) => {
       report.backendMicroservices.forEach((microservice) => {
         console.log(microservice);
@@ -83,6 +101,11 @@ export default {
     res.status(200).json(baseMicroservices);
   },
   getAllEntities: async (req, res, next) => {
+    let { from, to } = req.query;
+
+    from = new Date(from * 1);
+    to = new Date(to * 1);
+
     let entityData = [
       { name: "Average of Atrributes", value: 0 },
       { name: "Average of Relations", value: 0 },
@@ -90,10 +113,17 @@ export default {
 
     let reports;
     try {
-      reports = await Report.find().lean();
+      reports = await Report.find({
+        generationDate: {
+          $gte: from,
+          $lt: to,
+        },
+      }).lean();
     } catch (err) {
       res.status(500);
     }
+
+    if (!reports) return res.status(200).json(entityData);
 
     let entityLength = 0;
     reports.forEach((report) => {
@@ -144,14 +174,23 @@ export default {
     res.status(200).json(timeColum);
   },
   getCapabilities: async (req, res, next) => {
+    let { from, to } = req.query;
+
     let capabilities = [];
 
     let reports;
     try {
-      reports = await Report.find().lean();
+      reports = await Report.find({
+        generationDate: {
+          $gte: from,
+          $lt: to,
+        },
+      }).lean();
     } catch (err) {
       res.status(500);
     }
+
+    if (!reports) return res.status(200).json(entityData);
 
     reports.forEach((report) => {
       report.backendMicroservices.forEach((microservice) => {
@@ -175,33 +214,3 @@ export default {
     res.status(200).json(capabilities);
   },
 };
-
-/* 
-let timeTable = {};
-
-let reports;
-try {
-  reports = await Report.find().lean();
-} catch (err) {
-  res.status(500);
-}
-
-reports.forEach((report) => {
-  let actualDate = report.generationDate.toDateString().split("T")[0];
-
-  let flag = 0;
-  Object.keys(timeTable).forEach((element, index) => {
-    if (element != actualDate || flag == 1) {
-      return;
-    }
-    timeTable[element] = timeTable[element] + 1;
-    flag = 1;
-  });
-
-  if (flag == 0) {
-    timeTable[actualDate] = 1;
-  }
-});
-
-console.log(timeTable);
-res.status(200).json({ timeTable }); */
