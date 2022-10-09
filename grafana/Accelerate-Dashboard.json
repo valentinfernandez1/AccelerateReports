@@ -195,8 +195,8 @@
         "showHeader": true,
         "sortBy": [
           {
-            "desc": false,
-            "displayName": "name"
+            "desc": true,
+            "displayName": "A"
           }
         ]
       },
@@ -569,8 +569,8 @@
       {
         "current": {
           "selected": true,
-          "text": "http://10.0.0.199:8000",
-          "value": "http://10.0.0.199:8000"
+          "text": "https://accelerate-reports.herokuapp.com",
+          "value": "https://accelerate-reports.herokuapp.com"
         },
         "hide": 0,
         "includeAll": false,
@@ -578,12 +578,12 @@
         "name": "url",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "https://accelerate-reports.herokuapp.com",
             "value": "https://accelerate-reports.herokuapp.com"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "http://10.0.0.199:8000",
             "value": "http://10.0.0.199:8000"
           }
@@ -596,13 +596,13 @@
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Accelerate",
   "uid": "77uJNY4Vk",
-  "version": 9,
+  "version": 10,
   "weekStart": ""
 }
