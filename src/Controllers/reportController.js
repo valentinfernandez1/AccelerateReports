@@ -142,7 +142,6 @@ export default {
         entityData[0].value = entityData[0].value + entity.amountAtributes;
         entityData[1].value = entityData[1].value + entity.amountRelations;
       });
-      console.log(entityLength, report.entities.length);
     });
     entityData[0].value = entityData[0].value / entityLength;
     entityData[1].value = entityData[1].value / entityLength;
