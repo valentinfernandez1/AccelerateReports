@@ -117,7 +117,7 @@ export default {
     let { from = 0, to = new Date() } = req.query;
 
     let entityData = [
-      { name: "Average of Atributes", value: 0 },
+      { name: "Average of Attributes", value: 0 },
       { name: "Average of Relations", value: 0 },
     ];
 
